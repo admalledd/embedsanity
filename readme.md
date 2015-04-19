@@ -10,7 +10,7 @@ This project is me going insane with trying to hook together as many languages a
 * Project failure as of 2014/4/18 for embedding pypy3, too many internal failures.
 * 2014/4/21 Attempted again after reading a bit about `valgrind` and `gdb`, to see if I could track down and explain the issues.
     * success! able to run bootstrap.py (needed to patch `targetpypystandalone.py`, details follow. should be in mainline "soon")
-    * The function `pypy_setup_home` in `pypy/goal/targetpypystandalone.py` sets up the `builtins` module as well, but oops! tried to call __builtins__ instead or some such. replace `import_ = space.getattr(space.getbuiltinmodule('__builtin__'), space.wrap('__import__'))` with `import_ = space.getattr(space.getbuiltinmodule('builtins'), space.wrap('__import__'))`
+    * The function `pypy_setup_home` in `pypy/goal/targetpypystandalone.py` sets up the `builtins` module as well, but oops! tried to call \_\_builtins\_\_ instead or some such. replace `import_ = space.getattr(space.getbuiltinmodule('__builtin__'), space.wrap('__import__'))` with `import_ = space.getattr(space.getbuiltinmodule('builtins'), space.wrap('__import__'))`
     * Another issue was found after this: for some reason the FD's of sys.stdin,sys.stdout,sys.stderr were all missing/bad. simple fix with os.fdopen() though inside the bootstrap.py
     * issue on my end was not properly null-terminating my `source` string. derp.
 * 2014/5/31 Reworking project to now be about embedding *anything* instead of embedding just pypy. (because why not?)
