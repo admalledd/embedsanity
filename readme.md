@@ -42,5 +42,5 @@ This project is me going insane with trying to hook together as many languages a
 
 MIT, with some non-binding clauses of:
 
-    * try to source to the primary author (Eric D Driggers, aka admalledd)
-    * If this was found useful for you and/or your company and might have a interesting employment opportunity I (admalledd) would love to hear about it :D
+* try to source to the primary author (Eric D Driggers, aka admalledd)
+* If this was found useful for you and/or your company and might have a interesting employment opportunity I (admalledd) would love to hear about it :D
