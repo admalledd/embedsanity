@@ -3,10 +3,12 @@
 	<FileVersion major="1" minor="6" />
 	<Project>
 		<Option title="embedding_pypy_test1" />
+		<Option makefile="makefile" />
+		<Option makefile_is_custom="1" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
-			<Target title="Debug">
+			<Target title="debug">
 				<Option output="bin/Debug/embedding_pypy_test1" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
@@ -14,8 +16,16 @@
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
+				<MakeCommands>
+					<Build command="$make -j4 -f $makefile $target V=true" />
+					<CompileFile command="$make -f $makefile $file V=true" />
+					<Clean command="$make -f $makefile clean" />
+					<DistClean command="$make -f $makefile distclean$target" />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -j4 -f $makefile $target V=true &gt; $(CMD_NULL)" />
+				</MakeCommands>
 			</Target>
-			<Target title="Release">
+			<Target title="release">
 				<Option output="bin/Release/embedding_pypy_test1" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
@@ -26,18 +36,34 @@
 				<Linker>
 					<Add option="-s" />
 				</Linker>
+				<MakeCommands>
+					<Build command="$make -j4 -f $makefile $target V=true" />
+					<CompileFile command="$make -f $makefile $file" />
+					<Clean command="$make -f $makefile clean" />
+					<DistClean command="$make -f $makefile distclean$target" />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -j4 -f $makefile $target V=true &gt; $(CMD_NULL)" />
+				</MakeCommands>
 			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wextra" />
 			<Add option="-Wall" />
-			<Add directory="/home/admalledd/dev/pypy/builds/pypy-default-shared-64bit-2014-4-14/include" />
+			<Add option="-std=c11" />
+			<Add directory="/home/admalledd/dev/pypy/pypy_scripts/links/include/pypy3_shared_latest" />
+			<Add directory="/usr/lib/jvm/java-1.7.0-openjdk-amd64/include" />
 		</Compiler>
 		<Linker>
 			<Add option="-ljansson" />
-			<Add library="/usr/local/lib/libpypy-c-py3k.so" />
+			<Add option="-ljvm" />
+			<Add library="/home/admalledd/dev/pypy/pypy_scripts/links/lib/libpypy3-latest.so" />
+			<Add directory="/usr/lib/jvm/java-1.7.0-openjdk-amd64/jre/lib/amd64/server" />
 		</Linker>
 		<Unit filename="globals.h" />
+		<Unit filename="java_hooks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="java_hooks.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>

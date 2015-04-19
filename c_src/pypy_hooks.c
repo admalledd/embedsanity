@@ -27,7 +27,11 @@ struct t_pypy_bootstrap {
 
 int callback(int (*func)(int))
 {
-    printf("Calling to Python, pyresult: %d\n", func(3));
+    printf("C->pypy calling\n");
+    int ret = func(3);
+    printf("Called to Python, pyresult: %d\n", ret);
+    //show calling global func pointer
+    ((void (*)() )G_globals->callbacks.c_2_pypy_callback)();
     return 16;
 }
 
@@ -36,6 +40,8 @@ int init_pypy()
 {
     int res;
     char * source;
+
+    G_globals->callbacks.pypy_2_c_callback = &callback;
 
     source = read_whole_file(PYPY_BOOTSTRAP_FILE);
     printf("doing pypy bootstrap...(in c)\n");
@@ -55,7 +61,7 @@ int init_pypy()
     if (res) {
         printf("Error calling bootstrap.py!\n");
     }
-    //free (source);
+    free (source);
     return res;
 
 }

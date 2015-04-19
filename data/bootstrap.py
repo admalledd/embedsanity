@@ -82,6 +82,7 @@ try:
     #ugly cheat to get globals anywhere in our files without writing our own injector. yay!
     
     sys.modules['data']={
+                       "ffi":ffi,
                        "gl":g_globals,
                        "paths":py_boot.paths
                         }

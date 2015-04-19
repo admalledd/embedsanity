@@ -113,15 +113,39 @@ int init_paths()
     if (!json_is_string(json_object_get(j_pth,"java_class_home"))){
         fprintf(stderr,"config error: 'java_class_home' is not a string/defined!\n");
         return -1;
-    }/*
-    if (!json_is_string(json_object_get(j_pth,"java_class_sys"))){
-        fprintf(stderr,"config error: 'java_class_sys' is not a string/defined!\n");
+    }
+    if (!json_is_object(json_object_get(j_pth,"monowrapper"))){
+        fprintf(stderr,"config error: 'monowrapper' is not a string/defined!\n");
         return -1;
-    }*/
-    G_paths.data            = json_string_value(json_object_get(j_pth,"data_dir"));
-    G_paths.pypy_home       = json_string_value(json_object_get(j_pth,"pypy_home"));
-    G_paths.java_class_home = json_string_value(json_object_get(j_pth,"java_class_home"));
-    //G_paths.java_class_sys  = json_string_value(json_object_get(j_pth,"java_class_sys"));
+    }
+
+    //.NET/mono info
+    json_t *monoinfo = json_object_get(j_pth,"monowrapper");
+    if (!json_is_string(json_object_get(monoinfo,"exe"))){
+        fprintf(stderr,"config error: 'monowrapper->exe' is not a string/defined!\n");
+        return -1;
+    }
+    if (!json_is_string(json_object_get(monoinfo,"namespace"))){
+        fprintf(stderr,"config error: 'monowrapper->namespace' is not a string/defined!\n");
+        return -1;
+    }
+    if (!json_is_string(json_object_get(monoinfo,"class"))){
+        fprintf(stderr,"config error: 'monowrapper->class' is not a string/defined!\n");
+        return -1;
+    }
+    if (!json_is_string(json_object_get(monoinfo,"callback"))){
+        fprintf(stderr,"config error: 'monowrapper->callback' is not a string/defined!\n");
+        return -1;
+    }
+
+
+    G_paths.data              = json_string_value(json_object_get(j_pth,"data_dir"));
+    G_paths.pypy_home         = json_string_value(json_object_get(j_pth,"pypy_home"));
+    G_paths.java_class_home   = json_string_value(json_object_get(j_pth,"java_class_home"));
+    G_paths.mono_interop_exe  = json_string_value(json_object_get(monoinfo,"exe"));
+    G_paths.mono_namespace    = json_string_value(json_object_get(monoinfo,"namespace"));
+    G_paths.mono_class        = json_string_value(json_object_get(monoinfo,"class"));
+    G_paths.mono_callback     = json_string_value(json_object_get(monoinfo,"callback"));
 
     printf("data dir at: '%s'\n", G_paths.data);
     printf("pypy-home at: '%s'\n",G_paths.pypy_home);

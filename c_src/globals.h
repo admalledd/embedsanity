@@ -22,7 +22,15 @@ typedef struct {
     const char * cwd;
     const char * pypy_home;
     const char * java_class_home;
-    //const char * java_class_sys;
+    
+    // .NET File where "static Main()" is defined 
+    const char * mono_interop_exe; 
+    
+    //Config options for what the first callback (that we pass globals to) lies
+    const char * mono_namespace;
+    const char * mono_class;
+    const char * mono_callback;
+
     const char * data;
 } t_paths;
 
@@ -36,9 +44,11 @@ typedef struct {
     json_t * config;
     char * config_file;
     struct {
-        void * check_callback;
-        void * get_path;
-        void * get_whole_file;
+        //These should really be the end-result func pointers iunstead of void *...
+        void * pypy_2_c_callback;
+        void * c_2_pypy_callback;
+        void * java_2_c_callback;
+        void * c_2_java_callback;
     }callbacks;
 
 } t_G_globals;

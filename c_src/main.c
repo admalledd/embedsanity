@@ -6,6 +6,7 @@
 
 #include "pypy_hooks.h"
 #include "java_hooks.h"
+#include "mono_hooks.h"
 #include "util.h"
 #include "globals.h"
 
@@ -55,6 +56,8 @@ int main(int argc, char * argv[])
     init_pypy();
 
     init_java();
+
+    init_mono();
 
     /*MAIN LOOP CALL HERE*/
 

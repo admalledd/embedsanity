@@ -14,11 +14,11 @@ RCOMPILE_FLAGS = -D NDEBUG
 # Additional debug-specific flags
 DCOMPILE_FLAGS = -D DEBUG
 # Add additional include paths
-INCLUDES = -I$(SRC_PATH)/ -I/usr/lib/jvm/java-7-openjdk-amd64/include/ -D_REENTRANT
+INCLUDES = -I$(SRC_PATH)/ -I/usr/lib/jvm/java-7-openjdk-amd64/include/ -I/usr/include/mono-2.0 -D_REENTRANT
 # General linker settings
-LINK_FLAGS = -L/home/admalledd/dev/pypy/builds/pypy-3k-shared-64bit-2014-4-14/bin/ \
+LINK_FLAGS = -L/home/admalledd/dev/pypy/builds/pypy-py3k-64bit-2014-10-31/bin \
  -L/usr/lib/x86_64-linux-gnu -L/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/amd64/server \
- -ljansson -lpypy-c -ljvm
+ -ljansson -lpypy-c -ljvm -lmono-2.0 -lm -lrt -ldl -lpthread
 # Additional release-specific linker settings
 RLINK_FLAGS =
 # Additional debug-specific linker settings

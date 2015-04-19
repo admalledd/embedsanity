@@ -14,7 +14,7 @@ WHITE="\033[1;37m"
 BOLD_SEQ="\033[1m"
 
 
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/admalledd/dev/pypy/builds/pypy-3k-shared-64bit-2014-4-14/bin/:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/amd64/server
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/admalledd/dev/pypy/builds/pypy-py3k-64bit-2014-10-31/bin:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/amd64/server
 
 #default: recompile
 echo -e "${RED}recompiling...${RESET_SEQ}"
@@ -23,12 +23,12 @@ echo -e "${RED}recompiling...${RESET_SEQ}"
 (rm ./hs_err_pid* ||true)        #ignore failing rm
 
 cd c_src
-make -j4 debug V=true #-j4 so that I use multiple cores for fast building...
+make -j8 debug V=true
 make install #install on its own step due to out-of-order building above
 cd ..
 echo -e "${RED}compile bootstraps... (java,mono,etc)${RESET_SEQ}"
 cd data
-javac bootstrap.java
+make debug V=true
 cd ..
 
 echo -e "${RED}recompile done! launch follows:${RESET_SEQ}"
@@ -41,4 +41,4 @@ echo -e "\n\n\n"
 
 #if valgrinding:
 
-#valgrind --leak-check=full --num-callers=50 --suppressions=valgrind.supp ./bin/embsanity.bin $1
+#valgrind --leak-check=full --num-callers=500 ./bin/embsanity.bin $1
